@@ -1,0 +1,45 @@
+<article class="rh-card listing">
+  <div class="img-wrap">
+    <img
+      [src]="listing().photos[0] || 'https://placehold.co/600x400?text=No+Photo'"
+      [alt]="listing().title"
+      loading="lazy"
+    />
+    <button
+      class="heart"
+      [class.on]="isFavourite()"
+      (click)="favouriteToggled.emit(listing().id)"
+      [attr.aria-label]="isFavourite() ? 'Remove from favourites' : 'Mark as favourite'"
+    >
+      <i class="bi" [class.bi-heart-fill]="isFavourite()" [class.bi-heart]="!isFavourite()"></i>
+    </button>
+    @if (listing().negotiable) {
+      <span class="tag">Negotiable</span>
+    }
+  </div>
+
+  <div class="p-3">
+    <h3 class="title">{{ listing().title }}</h3>
+    <p class="loc"><i class="bi bi-geo-alt-fill"></i> {{ listing().address }}</p>
+
+    <div class="d-flex flex-wrap gap-1 mb-2">
+      @if (listing().furnished) {
+        <span class="rh-chip furnished">Furnished</span>
+      }
+      <span class="rh-chip">{{ listing().sqft }} sq ft</span>
+      @for (a of listing().amenities.slice(0, 2); track a) {
+        <span class="rh-chip">{{ a }}</span>
+      }
+    </div>
+
+    <div class="d-flex justify-content-between align-items-end mt-3">
+      <div>
+        <div class="price">{{ listing().rent | currency: 'USD' : 'symbol' : '1.0-0' }}</div>
+        <small class="text-muted">per month</small>
+      </div>
+      <div class="d-flex gap-2">
+        <a [routerLink]="['/listing', listing().id]" class="btn btn-primary btn-sm">View Details</a>
+      </div>
+    </div>
+  </div>
+</article>

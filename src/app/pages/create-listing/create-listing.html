@@ -1,0 +1,386 @@
+<div class="container py-4">
+  <h1 class="h3 mb-3">{{ editId ? 'Edit listing' : 'Post a new listing' }}</h1>
+
+  @if (step() === 'form') {
+    <form [formGroup]="form" (ngSubmit)="goPreview()" novalidate>
+      <!-- Choose property -->
+      <section class="rh-card p-4 mb-3">
+        <h2 class="h5">Choose your Apartment/Building</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Property type *</label>
+            <select
+              class="form-select"
+              formControlName="propertyType"
+              [class.is-invalid]="invalid('propertyType')"
+            >
+              <option value="">Select an option</option>
+              @for (t of propertyTypes; track t) {
+                <option [value]="t">{{ t }}</option>
+              }
+            </select>
+            <div class="invalid-feedback">Please select a property type.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Name of your apartment/building *</label>
+            <input
+              class="form-control"
+              formControlName="propertyName"
+              [class.is-invalid]="invalid('propertyName')"
+            />
+            <div class="invalid-feedback">Name is required (max 80 characters).</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Number of beds *</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="beds"
+              [class.is-invalid]="invalid('beds')"
+            />
+            <div class="invalid-feedback">Enter a number between 0 and 20.</div>
+          </div>
+        </div>
+
+        <h2 class="h5 mt-4">Is this a shared property? *</h2>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="sh-y"
+            formControlName="sharedProperty"
+            [value]="true"
+          />
+          <label class="form-check-label" for="sh-y">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="sh-n"
+            formControlName="sharedProperty"
+            [value]="false"
+          />
+          <label class="form-check-label" for="sh-n">No</label>
+        </div>
+        @if (invalid('sharedProperty')) {
+          <div class="text-danger small">Please choose one.</div>
+        }
+      </section>
+
+      <!-- Location & details -->
+      <section class="rh-card p-4 mb-3">
+        <h2 class="h5">Property Location</h2>
+        <label class="form-label">Street address *</label>
+        <input
+          class="form-control"
+          formControlName="address"
+          placeholder="Enter street address"
+          [class.is-invalid]="invalid('address')"
+        />
+        <div class="invalid-feedback">Address is required (min 5 characters).</div>
+
+        <h2 class="h5 mt-4">Property Details</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Square feet *</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="sqft"
+              placeholder="Enter area in square feet"
+              [class.is-invalid]="invalid('sqft')"
+            />
+            <div class="invalid-feedback">Enter an area between 50 and 100000.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label d-block">Stay / Lease type *</label>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="lt1"
+                formControlName="leaseType"
+                value="long"
+              /><label class="form-check-label" for="lt1">Long term (6+ months)</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="lt2"
+                formControlName="leaseType"
+                value="short"
+              /><label class="form-check-label" for="lt2">Short term</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="lt3"
+                formControlName="leaseType"
+                value="both"
+              /><label class="form-check-label" for="lt3">Both</label>
+            </div>
+            @if (invalid('leaseType')) {
+              <div class="text-danger small">Please choose a lease type.</div>
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- Rent -->
+      <section class="rh-card p-4 mb-3">
+        <h2 class="h5">Expected Rent</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Expected rent *</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text">$</span>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="rent"
+                placeholder="Enter expected rent"
+                [class.is-invalid]="invalid('rent')"
+              />
+              <div class="invalid-feedback">Rent must be greater than 0.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check mb-2">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="neg"
+                formControlName="negotiable"
+              />
+              <label class="form-check-label" for="neg">Negotiable</label>
+            </div>
+            <label class="form-label d-block">Price mode</label>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="pm1"
+                formControlName="priceMode"
+                value="perMonth"
+              /><label class="form-check-label" for="pm1">Per month</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="pm2"
+                formControlName="priceMode"
+                value="utilitiesIncluded"
+              /><label class="form-check-label" for="pm2">Utilities included in rent</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Furnished & amenities -->
+      <section class="rh-card p-4 mb-3">
+        <h2 class="h5">Is the room/apartment furnished? *</h2>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="f-y"
+            formControlName="furnished"
+            [value]="true"
+          />
+          <label class="form-check-label" for="f-y">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="f-n"
+            formControlName="furnished"
+            [value]="false"
+          />
+          <label class="form-check-label" for="f-n">No</label>
+        </div>
+        @if (invalid('furnished')) {
+          <div class="text-danger small">Please choose one.</div>
+        }
+
+        <h2 class="h5 mt-4">Amenities included</h2>
+        <div class="amenity-grid">
+          @for (a of amenityOptions; track a) {
+            <label class="form-check-label">
+              <input
+                type="checkbox"
+                class="form-check-input me-1"
+                [checked]="form.controls.amenities.value.includes(a)"
+                (change)="toggleAmenity(a)"
+              />
+              {{ a }}
+            </label>
+          }
+        </div>
+      </section>
+
+      <!-- Description -->
+      <section class="rh-card p-4 mb-3">
+        <h2 class="h5">Description</h2>
+        <label class="form-label">Title *</label>
+        <input
+          class="form-control"
+          formControlName="title"
+          placeholder="Enter your AD title"
+          [class.is-invalid]="invalid('title')"
+        />
+        <div class="invalid-feedback">Title is required (5 to 100 characters).</div>
+
+        <label class="form-label mt-3">Description *</label>
+        <textarea
+          class="form-control"
+          rows="5"
+          formControlName="description"
+          maxlength="1400"
+          placeholder="Enter a detailed description within 1400 characters"
+          [class.is-invalid]="invalid('description')"
+        ></textarea>
+        <div class="d-flex justify-content-between">
+          <div class="invalid-feedback d-block" [class.d-none]="!invalid('description')">
+            Description must be 30 to 1400 characters.
+          </div>
+          <small class="text-muted ms-auto"
+            >{{ form.controls.description.value.length }}/1400</small
+          >
+        </div>
+
+        <label class="form-label mt-3">Contact (email or phone) *</label>
+        <input
+          class="form-control"
+          formControlName="contact"
+          [class.is-invalid]="invalid('contact')"
+        />
+        <div class="invalid-feedback">Enter a valid email or phone number.</div>
+      </section>
+
+      <!-- Photos -->
+      <section class="rh-card p-4 mb-3">
+        <h2 class="h5">
+          Photos * <small class="text-muted fs-6">(up to {{ maxPhotos }})</small>
+        </h2>
+        <input
+          type="file"
+          class="form-control"
+          accept="image/*"
+          multiple
+          (change)="onFiles($event)"
+        />
+        @if (photoError()) {
+          <div class="text-danger small mt-1">{{ photoError() }}</div>
+        }
+        <div class="photo-row mt-3">
+          @for (p of photos(); track $index) {
+            <div class="photo">
+              <img [src]="p" alt="Photo {{ $index + 1 }}" />
+              <button
+                type="button"
+                class="btn-close"
+                aria-label="Remove photo"
+                (click)="removePhoto($index)"
+              ></button>
+            </div>
+          }
+        </div>
+      </section>
+
+      <div class="d-flex gap-2 justify-content-end">
+        <a routerLink="/" class="btn btn-outline-secondary">Cancel</a>
+        <button class="btn btn-primary" type="submit">
+          Preview <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </form>
+  } @else {
+    <!-- PREVIEW AND SUBMIT -->
+    @let v = preview();
+    <h2 class="h4 text-center mb-3">Preview and Submit</h2>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="rh-card p-3 h-100">
+          <h3 class="h6">Property Type</h3>
+          <p class="mb-0">{{ v.propertyType }} - {{ v.propertyName }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="rh-card p-3 h-100">
+          <h3 class="h6">Number of Beds</h3>
+          <p class="mb-0">{{ v.beds }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="rh-card p-3 h-100">
+          <h3 class="h6">Address</h3>
+          <p class="mb-0">{{ v.address }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="rh-card p-3 h-100">
+          <h3 class="h6">Rent</h3>
+          <p class="mb-0 price">
+            {{ v.rent | currency: 'USD' : 'symbol' : '1.0-0' }}/month
+            @if (v.negotiable) {
+              <span class="rh-chip">Negotiable</span>
+            }
+            @if (v.priceMode === 'utilitiesIncluded') {
+              <span class="rh-chip">Utilities incl.</span>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="rh-card p-3 h-100">
+          <h3 class="h6">{{ v.title }}</h3>
+          <p class="mb-0 small">{{ v.description }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="rh-card p-3 h-100">
+          <h3 class="h6">Amenities</h3>
+          @for (a of v.amenities; track a) {
+            <span class="rh-chip me-1 mb-1">{{ a }}</span>
+          } @empty {
+            <span class="text-muted">None selected</span>
+          }
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="rh-card p-3 h-100">
+          <h3 class="h6">Other details</h3>
+          <p class="mb-0 small">
+            {{ v.sqft }} sq ft | {{ v.furnished ? 'Furnished' : 'Unfurnished' }} |
+            {{ v.sharedProperty ? 'Shared' : 'Not shared' }} | Lease: {{ v.leaseType
+            }}<br />Contact: {{ v.contact }}
+          </p>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="rh-card p-3">
+          <h3 class="h6">Photos</h3>
+          <div class="photo-row">
+            @for (p of photos(); track $index) {
+              <div class="photo"><img [src]="p" alt="Photo {{ $index + 1 }}" /></div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 justify-content-end mt-4">
+      <button class="btn btn-outline-secondary" (click)="backToEdit()">
+        <i class="bi bi-arrow-left"></i> Back to edit
+      </button>
+      <button class="btn btn-deal" (click)="submit()">
+        <i class="bi bi-check2-circle"></i> {{ editId ? 'Save changes' : 'Submit listing' }}
+      </button>
+    </div>
+  }
+</div>

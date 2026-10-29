@@ -1,0 +1,45 @@
+<div class="container py-4">
+  <div class="rh-card p-4 mb-4">
+    <h1 class="h3 mb-1">{{ auth.currentUser()?.name }}</h1>
+    <p class="text-muted mb-0">{{ auth.currentUser()?.email }}</p>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4 mb-0">My listings ({{ mine().length }})</h2>
+    <a routerLink="/create" class="btn btn-primary btn-sm"
+      ><i class="bi bi-plus-circle"></i> New listing</a
+    >
+  </div>
+  <div class="row g-4">
+    @for (l of mine(); track l.id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <app-listing-card
+          [listing]="l"
+          [isFavourite]="favouriteIds().includes(l.id)"
+          (favouriteToggled)="toggleFav($event)"
+        />
+        <div class="d-flex gap-2 mt-2">
+          <a [routerLink]="['/edit', l.id]" class="btn btn-outline-primary btn-sm">Edit</a>
+          <button class="btn btn-outline-danger btn-sm" (click)="remove(l.id)">Delete</button>
+        </div>
+      </div>
+    } @empty {
+      <p class="text-muted">You haven't posted anything yet.</p>
+    }
+  </div>
+
+  <h2 class="h4 mt-5 mb-3">My favourites ({{ favourites().length }})</h2>
+  <div class="row g-4">
+    @for (l of favourites(); track l.id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <app-listing-card
+          [listing]="l"
+          [isFavourite]="true"
+          (favouriteToggled)="toggleFav($event)"
+        />
+      </div>
+    } @empty {
+      <p class="text-muted">No favourites yet. Tap the heart on any listing.</p>
+    }
+  </div>
+</div>

@@ -1,0 +1,40 @@
+.rh-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  border-bottom: 1px solid var(--rh-border);
+  padding: 0.75rem 0;
+}
+.brand {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--rh-navy);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  i {
+    color: var(--rh-blue);
+  }
+  span {
+    color: var(--rh-blue);
+  }
+}
+.nav-item-link {
+  color: var(--rh-navy);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  &:hover,
+  &.active {
+    background: var(--rh-blue-light);
+    color: var(--rh-blue);
+  }
+}
+@media (max-width: 576px) {
+  .nav-item-link {
+    display: none;
+  } // keep mobile navbar compact
+}

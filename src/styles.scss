@@ -1,1 +1,96 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --rh-blue: #2067da; // primary buttons, links
+  --rh-blue-dark: #1a56b8;
+  --rh-blue-light: #e8f0fe; // chips, hover backgrounds
+  --rh-navy: #1c2b4a; // headings
+  --rh-orange: #ff5e1f; // prices / deals
+  --rh-green: #0e8a4f; // "furnished" / positive badges
+  --rh-gray-bg: #f2f4f8; // page background
+  --rh-border: #e1e5ec;
+  --rh-radius: 12px;
+  --rh-shadow: 0 2px 8px rgba(28, 43, 74, 0.08);
+  --rh-shadow-hover: 0 8px 24px rgba(28, 43, 74, 0.16);
+
+  --bs-primary: var(--rh-blue);
+  --bs-primary-rgb: 32, 103, 218;
+  --bs-link-color: var(--rh-blue);
+  --bs-body-font-family: 'Inter', system-ui, sans-serif;
+  --bs-body-color: #2a3547;
+}
+
+body {
+  background: var(--rh-gray-bg);
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: var(--rh-navy);
+  font-weight: 700;
+}
+
+// Buttons
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+}
+.btn-primary {
+  --bs-btn-bg: var(--rh-blue);
+  --bs-btn-border-color: var(--rh-blue);
+  --bs-btn-hover-bg: var(--rh-blue-dark);
+  --bs-btn-hover-border-color: var(--rh-blue-dark);
+  --bs-btn-active-bg: var(--rh-blue-dark);
+  --bs-btn-disabled-bg: var(--rh-blue);
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--rh-blue);
+  --bs-btn-border-color: var(--rh-blue);
+  --bs-btn-hover-bg: var(--rh-blue);
+  --bs-btn-hover-border-color: var(--rh-blue);
+}
+.btn-deal {
+  background: var(--rh-orange);
+  color: #fff;
+  border: 0;
+}
+.btn-deal:hover {
+  background: #e84d12;
+  color: #fff;
+}
+
+// Form controls
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border-color: var(--rh-border);
+  padding: 0.65rem 0.85rem;
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--rh-blue);
+  box-shadow: 0 0 0 0.2rem rgba(32, 103, 218, 0.15);
+}
+
+// Reusable surface
+.rh-card {
+  background: #fff;
+  border-radius: var(--rh-radius);
+  box-shadow: var(--rh-shadow);
+  border: 1px solid var(--rh-border);
+}
+
+// Chips
+.rh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--rh-blue-light);
+  color: var(--rh-blue);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
