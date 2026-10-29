@@ -24,6 +24,7 @@
     font-size: 0.7rem;
     font-weight: 700;
     color: #222;
+    margin: 0;
   }
   input,
   select {
@@ -45,9 +46,12 @@
   height: 48px;
   border: 0;
   border-radius: 50%;
-  background: linear-gradient(90deg, #e61e4d, #d70466);
+  background: #ff385c;
   color: #fff;
   font-size: 1.1rem;
+  &:hover {
+    background: #e31c5f;
+  }
 }
 
 .chips {
@@ -73,28 +77,31 @@
   font-size: 0.75rem;
   font-weight: 600;
   border-bottom: 2px solid transparent;
-  opacity: 0.85;
   i {
     font-size: 1.5rem;
   }
   &:hover {
     color: #222;
     border-bottom-color: #ddd;
-    opacity: 1;
   }
   &.on {
     color: #222;
     border-bottom-color: #222;
-    opacity: 1;
   }
 }
 
+/* Featured carousel: fixed-height box, image can never overflow it */
 .slide {
   position: relative;
+  width: 100%;
   height: 420px;
   border-radius: 24px;
   overflow: hidden;
+  background: #222;
+
   img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -102,7 +109,10 @@
 }
 .slide-caption {
   position: absolute;
-  inset: auto 0 0 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
   padding: 2.5rem 2rem 2rem;
   color: #fff;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
@@ -139,5 +149,8 @@
   }
   .slide {
     height: 300px;
+  }
+  .slide-caption {
+    padding: 1.5rem 1rem 1rem;
   }
 }

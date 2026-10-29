@@ -1,10 +1,6 @@
 <article class="listing">
   <div class="img-wrap">
-    <img
-      [src]="listing().photos[0] || 'https://placehold.co/600x600?text=No+Photo'"
-      [alt]="listing().title"
-      loading="lazy"
-    />
+    <img [src]="thumb()" [alt]="listing().title" loading="lazy" decoding="async" />
     @if (listing().featured) {
       <span class="badge-top">Guest favourite</span>
     }

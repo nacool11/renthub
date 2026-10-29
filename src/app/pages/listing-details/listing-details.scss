@@ -1,8 +1,13 @@
 .main-photo {
+  position: relative;
+  width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
+  background: #f0f0f0;
   img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -15,13 +20,14 @@
   img {
     width: 90px;
     height: 64px;
+    flex: none;
     object-fit: cover;
     border-radius: 8px;
     cursor: pointer;
     border: 2px solid transparent;
     opacity: 0.7;
     &.active {
-      border-color: var(--rh-blue);
+      border-color: #222;
       opacity: 1;
     }
   }
@@ -41,12 +47,12 @@
   }
 }
 .price {
-  color: var(--rh-orange);
+  color: #222;
   font-size: 2rem;
   font-weight: 800;
   small {
     font-size: 1rem;
-    color: #6b778c;
+    color: #6a6a6a;
     font-weight: 500;
   }
 }
@@ -61,7 +67,7 @@
   &.reply {
     margin: 0.75rem 0 0;
     padding-left: 0.5rem;
-    border-left: 3px solid var(--rh-blue-light);
+    border-left: 3px solid #ebebeb;
   }
 }
 .avatar {
@@ -69,7 +75,7 @@
   height: 40px;
   flex: none;
   border-radius: 50%;
-  background: var(--rh-blue);
+  background: #222;
   color: #fff;
   display: grid;
   place-items: center;
