@@ -94,3 +94,138 @@ h5 {
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
 }
+:root {
+  --rh-blue: #ff385c; // primary (coral)
+  --rh-blue-dark: #e31c5f;
+  --rh-blue-light: #fff0f3; // chip / hover background
+  --rh-navy: #222222; // headings
+  --rh-orange: #222222; // prices are dark in Airbnb's style
+  --rh-green: #008a05;
+  --rh-gray-bg: #ffffff;
+  --rh-border: #ebebeb;
+  --rh-radius: 16px;
+  --rh-shadow: none;
+  --rh-shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.12);
+
+  --bs-primary: #ff385c;
+  --bs-primary-rgb: 255, 56, 92;
+  --bs-link-color: #222;
+  --bs-link-hover-color: #ff385c;
+  --bs-body-font-family: 'DM Sans', system-ui, sans-serif;
+  --bs-body-color: #484848;
+}
+
+body {
+  background: #fff;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #222;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+// Buttons
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+}
+.btn-primary,
+.btn-deal {
+  background: linear-gradient(90deg, #e61e4d, #e31c5f 50%, #d70466);
+  border: 0;
+  color: #fff;
+}
+.btn-primary:hover,
+.btn-deal:hover {
+  background: #d70466;
+  color: #fff;
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+}
+.btn-outline-primary {
+  --bs-btn-color: #222;
+  --bs-btn-border-color: #222;
+  --bs-btn-hover-bg: #222;
+  --bs-btn-hover-border-color: #222;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-bg: #222;
+  --bs-btn-active-border-color: #222;
+}
+.btn-link {
+  color: #222;
+  font-weight: 600;
+}
+
+// Forms
+.form-control,
+.form-select {
+  border-radius: 10px;
+  border: 1px solid #b0b0b0;
+  padding: 0.75rem 0.9rem;
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: #222;
+  box-shadow: 0 0 0 1px #222;
+}
+.form-check-input:checked {
+  background-color: #ff385c;
+  border-color: #ff385c;
+}
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 56, 92, 0.2);
+  border-color: #ff385c;
+}
+
+// Surfaces
+.rh-card {
+  background: #fff;
+  border-radius: var(--rh-radius);
+  border: 1px solid var(--rh-border);
+  box-shadow: var(--rh-shadow);
+}
+
+// Chips
+.rh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #f7f7f7;
+  color: #222;
+  border: 1px solid #ebebeb;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+}
+
+// Pagination (ng-bootstrap)
+.pagination {
+  --bs-pagination-active-bg: #222;
+  --bs-pagination-active-border-color: #222;
+  --bs-pagination-color: #222;
+  --bs-pagination-border-radius: 50%;
+  gap: 0.25rem;
+}
+.page-link {
+  border-radius: 50% !important;
+  border: 0;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+
+// Footer
+.rh-footer {
+  background: #f7f7f7;
+  border-top: 1px solid #ebebeb;
+  color: #6a6a6a;
+  font-size: 0.9rem;
+}

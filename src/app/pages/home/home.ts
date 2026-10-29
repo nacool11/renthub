@@ -102,4 +102,22 @@ export class Home {
     }
     this.listingService.toggleFavourite(id);
   }
+  readonly icons: Record<string, string> = {
+    'Gym/Fitness Center': 'bi-heart-pulse',
+    'Swimming Pool': 'bi-water',
+    'Car Park': 'bi-car-front',
+    'Visitors Parking': 'bi-p-square',
+    'Power Backup': 'bi-lightning-charge',
+    'Garbage Disposal': 'bi-trash3',
+    'Private Lawn': 'bi-flower1',
+    'Water Heater': 'bi-droplet-half',
+    'Plant Security System': 'bi-shield-check',
+    'Laundry Service': 'bi-basket',
+    Elevator: 'bi-building-up',
+    'Club House': 'bi-cup-hot',
+  };
+
+  scrollToListings() {
+    document.getElementById('all-listings')?.scrollIntoView({ behavior: 'smooth' });
+  }
 }

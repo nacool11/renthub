@@ -1,81 +1,72 @@
-<section class="hero">
+<!-- Pill search bar -->
+<section class="search-wrap">
   <div class="container">
-    <h1>Find your next home, hassle-free</h1>
-    <p>Apartments and rooms for rent, posted by real landlords</p>
-
-    <div class="search-box rh-card">
-      <div class="row g-2 align-items-end">
-        <div class="col-md-4">
-          <label class="form-label small fw-semibold">Location</label>
-          <input
-            class="form-control"
-            placeholder="City, area or title"
-            [ngModel]="location()"
-            (ngModelChange)="update(location, $event)"
-          />
-        </div>
-        <div class="col-md-2 col-6">
-          <label class="form-label small fw-semibold">Min price</label>
-          <input
-            type="number"
-            min="0"
-            class="form-control"
-            placeholder="$0"
-            [ngModel]="minPrice()"
-            (ngModelChange)="update(minPrice, $event)"
-          />
-        </div>
-        <div class="col-md-2 col-6">
-          <label class="form-label small fw-semibold">Max price</label>
-          <input
-            type="number"
-            min="0"
-            class="form-control"
-            placeholder="$6000"
-            [ngModel]="maxPrice()"
-            (ngModelChange)="update(maxPrice, $event)"
-          />
-        </div>
-        <div class="col-md-2">
-          <label class="form-label small fw-semibold">Sort by</label>
-          <select class="form-select" [ngModel]="sort()" (ngModelChange)="update(sort, $event)">
-            <option value="newest">Newest</option>
-            <option value="priceAsc">Price: low to high</option>
-            <option value="priceDesc">Price: high to low</option>
-          </select>
-        </div>
-        <div class="col-md-2 d-grid">
-          <button class="btn btn-outline-primary" (click)="showAmenities.set(!showAmenities())">
-            <i class="bi bi-sliders"></i> Amenities
-            @if (selectedAmenities().length) {
-              ({{ selectedAmenities().length }})
-            }
-          </button>
-        </div>
+    <div class="search-pill">
+      <div class="seg">
+        <label for="s-loc">Where</label>
+        <input
+          id="s-loc"
+          placeholder="Search city, area or title"
+          [ngModel]="location()"
+          (ngModelChange)="update(location, $event)"
+        />
       </div>
+      <div class="seg">
+        <label for="s-min">Min price</label>
+        <input
+          id="s-min"
+          type="number"
+          min="0"
+          placeholder="$0"
+          [ngModel]="minPrice()"
+          (ngModelChange)="update(minPrice, $event)"
+        />
+      </div>
+      <div class="seg">
+        <label for="s-max">Max price</label>
+        <input
+          id="s-max"
+          type="number"
+          min="0"
+          placeholder="Any"
+          [ngModel]="maxPrice()"
+          (ngModelChange)="update(maxPrice, $event)"
+        />
+      </div>
+      <div class="seg">
+        <label for="s-sort">Sort by</label>
+        <select id="s-sort" [ngModel]="sort()" (ngModelChange)="update(sort, $event)">
+          <option value="newest">Newest</option>
+          <option value="priceAsc">Price: low to high</option>
+          <option value="priceDesc">Price: high to low</option>
+        </select>
+      </div>
+      <button class="go" (click)="scrollToListings()" aria-label="Search">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
 
-      @if (showAmenities()) {
-        <div class="amenity-panel mt-3">
-          @for (a of amenityOptions; track a) {
-            <label class="form-check-label amenity">
-              <input
-                type="checkbox"
-                class="form-check-input me-1"
-                [checked]="selectedAmenities().includes(a)"
-                (change)="toggleAmenity(a)"
-              />
-              {{ a }}
-            </label>
-          }
-        </div>
+    <!-- Amenity filter chips (category row) -->
+    <div class="chips mt-4">
+      @for (a of amenityOptions; track a) {
+        <button
+          type="button"
+          class="chip"
+          [class.on]="selectedAmenities().includes(a)"
+          (click)="toggleAmenity(a)"
+        >
+          <i class="bi" [class]="icons[a] || 'bi-stars'"></i>
+          <span>{{ a }}</span>
+        </button>
       }
     </div>
   </div>
 </section>
 
-<div class="container py-4">
+<div class="container pb-5">
+  <!-- Featured carousel -->
   @if (featured().length) {
-    <h2 class="mb-3">Featured Listings</h2>
+    <h2 class="h4 mb-3">Featured listings</h2>
     <ngb-carousel [interval]="4500" [showNavigationIndicators]="true">
       @for (l of featured(); track l.id) {
         <ng-template ngbSlide>
@@ -83,20 +74,20 @@
             <img [src]="l.photos[0]" [alt]="l.title" />
             <div class="slide-caption">
               <h3>{{ l.title }}</h3>
-              <p class="mb-2"><i class="bi bi-geo-alt-fill"></i> {{ l.address }}</p>
+              <p class="mb-1"><i class="bi bi-geo-alt-fill"></i> {{ l.address }}</p>
               <p class="price-big">
-                {{ l.rent | currency: 'USD' : 'symbol' : '1.0-0' }}<small> /month</small>
+                {{ l.rent | currency: 'USD' : 'symbol' : '1.0-0' }}<small> / month</small>
               </p>
-              <a [routerLink]="['/listing', l.id]" class="btn btn-primary btn-sm me-2"
+              <a [routerLink]="['/listing', l.id]" class="btn btn-light btn-sm me-2"
                 >View Details</a
               >
-              <button class="btn btn-light btn-sm" (click)="toggleFav(l.id)">
+              <button class="btn btn-outline-light btn-sm" (click)="toggleFav(l.id)">
                 <i
                   class="bi"
                   [class.bi-heart-fill]="favouriteIds().includes(l.id)"
                   [class.bi-heart]="!favouriteIds().includes(l.id)"
                 ></i>
-                Mark as Favourite
+                {{ favouriteIds().includes(l.id) ? 'Favourited' : 'Mark as Favourite' }}
               </button>
             </div>
           </div>
@@ -105,9 +96,10 @@
     </ngb-carousel>
   }
 
-  <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
-    <h2 class="mb-0">
-      All Listings <small class="text-muted fs-6">({{ filtered().length }} found)</small>
+  <!-- All listings -->
+  <div id="all-listings" class="d-flex justify-content-between align-items-center mt-5 mb-3">
+    <h2 class="h4 mb-0">
+      All listings <small class="text-muted fs-6">({{ filtered().length }} found)</small>
     </h2>
     <button class="btn btn-link" (click)="clearFilters()">Clear filters</button>
   </div>
@@ -125,7 +117,7 @@
       }
     </div>
 
-    <div class="d-flex justify-content-center mt-4">
+    <div class="d-flex justify-content-center mt-5">
       <ngb-pagination
         [collectionSize]="filtered().length"
         [pageSize]="pageSize"
@@ -135,10 +127,11 @@
       />
     </div>
   } @else {
-    <div class="rh-card p-5 text-center">
+    <div class="text-center py-5">
       <i class="bi bi-search fs-1 text-muted"></i>
-      <h4 class="mt-2">No listings match your filters</h4>
-      <button class="btn btn-primary mt-2" (click)="clearFilters()">Reset filters</button>
+      <h4 class="mt-2">No matches found</h4>
+      <p class="text-muted">Try removing some filters or changing your search.</p>
+      <button class="btn btn-primary" (click)="clearFilters()">Reset filters</button>
     </div>
   }
 </div>
